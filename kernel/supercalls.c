@@ -95,18 +95,16 @@ static int do_report_event(void __user *arg)
 
     switch (cmd.event) {
     case EVENT_POST_FS_DATA: {
-        static bool post_fs_data_lock = false;
-        if (!post_fs_data_lock) {
-            post_fs_data_lock = true;
+        static atomic_t post_fs_data_lock = ATOMIC_INIT(0);
+        if (atomic_cmpxchg(&post_fs_data_lock, 0, 1) == 0) {
             pr_info("post-fs-data triggered\n");
             on_post_fs_data();
         }
         break;
     }
     case EVENT_BOOT_COMPLETED: {
-        static bool boot_complete_lock = false;
-        if (!boot_complete_lock) {
-            boot_complete_lock = true;
+        static atomic_t boot_complete_lock = ATOMIC_INIT(0);
+        if (atomic_cmpxchg(&boot_complete_lock, 0, 1) == 0) {
             pr_info("boot_complete triggered\n");
             on_boot_completed();
         }
