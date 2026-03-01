@@ -53,7 +53,7 @@
     <string name="home_learn_kernelsu_url">https://kernelsu.org/guide/what-is-kernelsu.html</string>
     <string name="module_magisk_conflict">मॉड्यूल अक्षम केले आहेत कारण ते Magisk च्या विरोधाभास आहे!</string>
     <string name="home_click_to_learn_kernelsu">ApexSU कसे स्थापित करायचे आणि मॉड्यूल कसे वापरायचे ते शिका</string>
-    <string name="home_support_content">ApexSU विनामूल्य आणि मुक्त स्रोत आहे, आणि नेहमीच असेल. तथापि, देणगी देऊन तुम्ही आम्हाला दाखवू शकता की तुमची काळजी आहे.</string>
+    <string name="home_support_content">ApexSU is free and open source. Star us on GitHub to show your support!</string>
     <string name="home_support_title">आम्हाला पाठिंबा द्या</string>
     <string name="profile_custom">कस्टम</string>
     <string name="profile_namespace">माउंट नेमस्पेस</string>
@@ -93,5 +93,10 @@
     <string name="about_report_issue">Report an issue</string>
     <string name="about_changelog">Changelog</string>
     <string name="about_view_releases">View all releases</string>
+    <string name="about_installation_guide">Installation guide</string>
+    <string name="about_built_on_kernelsu">Built on KernelSU</string>
+    <string name="about_kernelsu_thanks">Thanks to all KernelSU contributors</string>
+    <string name="about_made_with_love">Made with ❤️ by qrjhamron</string>
+    <string name="about_license">ApexSU • GPL-2.0</string>
     <string name="copied_to_clipboard">%s copied</string>
 </resources>

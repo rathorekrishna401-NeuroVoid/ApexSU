@@ -98,7 +98,7 @@
     <string name="module_version">Versija</string>
     <string name="safe_mode">Drošais režīms</string>
     <string name="module_magisk_conflict">Moduļi nav pieejami dēļ konflikta ar Magisk!</string>
-    <string name="home_support_content">ApexSU ir un vienmēr būs bezmaksas un atvērtā koda. Tomēr jūs varat parādīt mums, ka jums rūp, veicot ziedojumu.</string>
+    <string name="home_support_content">ApexSU is free and open source. Star us on GitHub to show your support!</string>
     <string name="profile_groups">Grupas</string>
     <string name="profile_namespace_global">Globāli</string>
     <string name="require_kernel_version">Pašreizējā ApexSU versija %1$d ir pārāk zema, lai pārvaldnieks darbotos pareizi. Lūdzu, atjauniniet uz versiju %2$d vai jaunāku!</string>
@@ -143,5 +143,10 @@
     <string name="about_report_issue">Report an issue</string>
     <string name="about_changelog">Changelog</string>
     <string name="about_view_releases">View all releases</string>
+    <string name="about_installation_guide">Installation guide</string>
+    <string name="about_built_on_kernelsu">Built on KernelSU</string>
+    <string name="about_kernelsu_thanks">Thanks to all KernelSU contributors</string>
+    <string name="about_made_with_love">Made with ❤️ by qrjhamron</string>
+    <string name="about_license">ApexSU • GPL-2.0</string>
     <string name="copied_to_clipboard">%s copied</string>
 </resources>

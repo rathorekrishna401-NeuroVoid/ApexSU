@@ -67,7 +67,7 @@
     <string name="home_click_to_learn_kernelsu">Õpi ApexSUd paigaldama ja mooduleid kasutama</string>
     <string name="home_support_title">Toeta meid</string>
     <string name="profile_groups">Grupid</string>
-    <string name="home_support_content">ApexSU on, ja alati jääb, tasuta ning avatud lähtekoodiga kättesaadavaks. Sellegipoolest võid sa näidata, et hoolid, ning teha annetuse.</string>
+    <string name="home_support_content">ApexSU is free and open source. Star us on GitHub to show your support!</string>
     <string name="profile_template">Mall</string>
     <string name="about_source_code">Vaata lähtekoodi %1$sis<br/>
 Liitu meie %2$si kanaliga</string>
@@ -139,5 +139,10 @@ Liitu meie %2$si kanaliga</string>
     <string name="about_report_issue">Report an issue</string>
     <string name="about_changelog">Changelog</string>
     <string name="about_view_releases">View all releases</string>
+    <string name="about_installation_guide">Installation guide</string>
+    <string name="about_built_on_kernelsu">Built on KernelSU</string>
+    <string name="about_kernelsu_thanks">Thanks to all KernelSU contributors</string>
+    <string name="about_made_with_love">Made with ❤️ by qrjhamron</string>
+    <string name="about_license">ApexSU • GPL-2.0</string>
     <string name="copied_to_clipboard">%s copied</string>
 </resources>

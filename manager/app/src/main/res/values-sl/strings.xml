@@ -72,7 +72,7 @@
     <string name="profile_name">Ime profila</string>
     <string name="profile_groups">Skupine</string>
     <string name="profile_selinux_context">SELinux kontekst</string>
-    <string name="home_support_content">ApexSU je, in bo vedno brezplačen in odprtokoden. Kljub temu, nam lahko z donacijo pokažete, da vam je mar.</string>
+    <string name="home_support_content">ApexSU is free and open source. Star us on GitHub to show your support!</string>
     <string name="failed_to_update_app_profile">Napaka pri posodobitvi aplikacijskega profila za %s</string>
     <string name="require_kernel_version">Za pravilno funkionalnost upravitelja je trenutna ApexSU verzija %1$d prenizka. Potrebna je nadgradnja na verzijo %2$d ali več!</string>
     <string name="settings_umount_modules_default_summary">Globalno privzeta vrednost za \"Izvrzi module\" v aplikacijskih profilih. Če je omogočena, bo to odstranilo vse sistemske modifikacije modulov za aplikacije, ki nimajo nastavljenega profila.</string>
@@ -114,5 +114,10 @@
     <string name="about_report_issue">Report an issue</string>
     <string name="about_changelog">Changelog</string>
     <string name="about_view_releases">View all releases</string>
+    <string name="about_installation_guide">Installation guide</string>
+    <string name="about_built_on_kernelsu">Built on KernelSU</string>
+    <string name="about_kernelsu_thanks">Thanks to all KernelSU contributors</string>
+    <string name="about_made_with_love">Made with ❤️ by qrjhamron</string>
+    <string name="about_license">ApexSU • GPL-2.0</string>
     <string name="copied_to_clipboard">%s copied</string>
 </resources>

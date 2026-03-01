@@ -18,7 +18,7 @@
     <string name="home_learn_kernelsu_url">https://kernelsu.org/guide/what-is-kernelsu.html</string>
     <string name="home_click_to_learn_kernelsu">Erfahre, wie ApexSU installiert wird und wie Module verwendet werden.</string>
     <string name="home_support_title">Unterstütze uns</string>
-    <string name="home_support_content">ApexSU ist und wird immer frei und quelloffen sein. Du kannst uns jedoch deine Unterstützung zeigen, indem du eine Spende tätigst.</string>
+    <string name="home_support_content">ApexSU is free and open source. Star us on GitHub to show your support!</string>
     <string name="profile_selinux_context">SELinux-Kontext</string>
     <string name="settings_umount_modules_default">Module standardmäßig aushängen</string>
     <string name="settings_umount_modules_default_summary">Globaler Standardwert für \"Module aushängen\" im App-Profil. Falls er aktiviert ist, werden alle Moduländerungen im System für alle Apps entfernt, für die kein Profil festgelegt ist.</string>
@@ -156,5 +156,10 @@
     <string name="about_report_issue">Report an issue</string>
     <string name="about_changelog">Changelog</string>
     <string name="about_view_releases">View all releases</string>
+    <string name="about_installation_guide">Installation guide</string>
+    <string name="about_built_on_kernelsu">Built on KernelSU</string>
+    <string name="about_kernelsu_thanks">Thanks to all KernelSU contributors</string>
+    <string name="about_made_with_love">Made with ❤️ by qrjhamron</string>
+    <string name="about_license">ApexSU • GPL-2.0</string>
     <string name="copied_to_clipboard">%s copied</string>
 </resources>
