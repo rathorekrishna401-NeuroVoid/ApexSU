@@ -234,3 +234,28 @@ pub fn uninstall(magiskboot_path: Option<PathBuf>) -> Result<()> {
     Command::new("reboot").spawn()?;
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn ensure_dir_exists_creates_dir() {
+        let tmp = std::env::temp_dir().join("ksu_test_ensure_dir");
+        let _ = std::fs::remove_dir_all(&tmp);
+        assert!(ensure_dir_exists(&tmp).is_ok());
+        assert!(tmp.is_dir());
+        let _ = std::fs::remove_dir_all(&tmp);
+    }
+
+    #[test]
+    fn ensure_dir_exists_already_exists() {
+        let tmp = std::env::temp_dir();
+        assert!(ensure_dir_exists(&tmp).is_ok());
+    }
+
+    #[test]
+    fn get_zip_uncompressed_size_invalid_path() {
+        assert!(get_zip_uncompressed_size("/nonexistent/file.zip").is_err());
+    }
+}

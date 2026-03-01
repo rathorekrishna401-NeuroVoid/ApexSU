@@ -450,3 +450,45 @@ pub fn init_features() -> Result<()> {
 
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn feature_id_round_trip() {
+        assert_eq!(FeatureId::from_u32(0), Some(FeatureId::SuCompat));
+        assert_eq!(FeatureId::from_u32(1), Some(FeatureId::KernelUmount));
+        assert_eq!(FeatureId::from_u32(99), None);
+    }
+
+    #[test]
+    fn feature_id_names() {
+        assert_eq!(FeatureId::SuCompat.name(), "su_compat");
+        assert_eq!(FeatureId::KernelUmount.name(), "kernel_umount");
+    }
+
+    #[test]
+    fn feature_id_descriptions_non_empty() {
+        assert!(!FeatureId::SuCompat.description().is_empty());
+        assert!(!FeatureId::KernelUmount.description().is_empty());
+    }
+
+    #[test]
+    fn parse_feature_id_valid() {
+        assert_eq!(parse_feature_id("su_compat").unwrap(), FeatureId::SuCompat);
+        assert_eq!(parse_feature_id("0").unwrap(), FeatureId::SuCompat);
+        assert_eq!(
+            parse_feature_id("kernel_umount").unwrap(),
+            FeatureId::KernelUmount
+        );
+        assert_eq!(parse_feature_id("1").unwrap(), FeatureId::KernelUmount);
+    }
+
+    #[test]
+    fn parse_feature_id_invalid() {
+        assert!(parse_feature_id("nonexistent").is_err());
+        assert!(parse_feature_id("").is_err());
+        assert!(parse_feature_id("99").is_err());
+    }
+}

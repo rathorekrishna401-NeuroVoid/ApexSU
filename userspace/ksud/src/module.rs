@@ -882,3 +882,57 @@ pub fn get_managed_features() -> Result<HashMap<String, Vec<String>>> {
 
     Ok(managed_features_map)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn valid_module_ids() {
+        assert!(validate_module_id("my.module").is_ok());
+        assert!(validate_module_id("com.example.mod_v2").is_ok());
+        assert!(validate_module_id("ab").is_ok());
+        assert!(validate_module_id("A-Module-Name").is_ok());
+        assert!(validate_module_id("test123").is_ok());
+    }
+
+    #[test]
+    fn invalid_module_ids() {
+        // Too short
+        assert!(validate_module_id("a").is_err());
+        // Starts with digit
+        assert!(validate_module_id("1abc").is_err());
+        // Contains spaces
+        assert!(validate_module_id("my module").is_err());
+        // Empty string
+        assert!(validate_module_id("").is_err());
+        // Special characters
+        assert!(validate_module_id("mod@name").is_err());
+        assert!(validate_module_id("mod/name").is_err());
+    }
+
+    #[test]
+    fn read_module_prop_missing_file() {
+        let tmp = std::env::temp_dir().join("nonexistent_module");
+        assert!(read_module_prop(&tmp).is_err());
+    }
+
+    #[test]
+    fn read_module_prop_valid() {
+        let tmp = std::env::temp_dir().join("test_module_prop");
+        std::fs::create_dir_all(&tmp).unwrap();
+        std::fs::write(
+            tmp.join("module.prop"),
+            "id=test_module\nname=Test Module\nversion=1.0\n",
+        )
+        .unwrap();
+
+        let props = read_module_prop(&tmp).unwrap();
+        assert_eq!(props.get("id").unwrap(), "test_module");
+        assert_eq!(props.get("name").unwrap(), "Test Module");
+        assert_eq!(props.get("version").unwrap(), "1.0");
+
+        // Cleanup
+        let _ = std::fs::remove_dir_all(&tmp);
+    }
+}
