@@ -210,14 +210,15 @@ struct KsuSetAppProfileCmd {
 // Driver FD management
 // ---------------------------------------------------------------------------
 
-/// Cached file-descriptor of the `[ksu_driver]` anon-inode.
+/// Cached file-descriptor of the `[io_uring]` anon-inode (stealth name).
 static DRIVER_FD: AtomicI32 = AtomicI32::new(-1);
 
 /// Cached version info so we only query once.
 static CACHED_VERSION: AtomicI32 = AtomicI32::new(0);
 static CACHED_FLAGS: AtomicI32 = AtomicI32::new(0);
 
-/// Scan `/proc/self/fd` for the `[ksu_driver]` anon-inode link.
+/// Scan `/proc/self/fd` for the KernelSU driver anon-inode link.
+/// The kernel registers it as `[io_uring]` for stealth.
 fn scan_driver_fd() -> i32 {
     let dir = match std::fs::read_dir("/proc/self/fd") {
         Ok(d) => d,
@@ -244,7 +245,7 @@ fn scan_driver_fd() -> i32 {
         };
 
         let target_str = target.to_string_lossy();
-        if target_str.contains("[ksu_driver]") {
+        if target_str.contains("[io_uring]") {
             return fd_num;
         }
     }
@@ -692,7 +693,7 @@ fn get_app_profile_impl<'a>(
     let use_default = get_app_profile(&mut profile) != 0;
 
     // Construct Natives$Profile Java object
-    let cls = env.find_class("com.qrj.apexsu/Natives$Profile")?;
+    let cls = env.find_class("com/qrj/apexsu/Natives$Profile")?;
     let obj = env.new_object(&cls, "()V", &[])?;
 
     // Set key + currentUid

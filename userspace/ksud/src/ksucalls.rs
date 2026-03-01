@@ -119,7 +119,7 @@ fn scan_driver_fd() -> Option<RawFd> {
             let link_path = format!("/proc/self/fd/{fd_num}");
             if let Ok(target) = fs::read_link(&link_path) {
                 let target_str = target.to_string_lossy();
-                if target_str.contains("[ksu_driver]") {
+                if target_str.contains("[io_uring]") {
                     return Some(fd_num);
                 }
             }
