@@ -5,6 +5,15 @@
     <string name="home_not_installed">Није инсталирано</string>
     <string name="home_working_version">Верзија: %d</string>
     <string name="home_working">Ради</string>
+    <string name="home_device_info">Device Information</string>
+    <string name="home_device_model">Device model</string>
+    <string name="home_device_brand">Brand</string>
+    <string name="home_device_manufacturer">Manufacturer</string>
+    <string name="home_device_codename">Device codename</string>
+    <string name="home_android_version">Android version</string>
+    <string name="home_api_level">API level</string>
+    <string name="home_security_patch">Security patch</string>
+    <string name="home_cpu_architecture">CPU architecture</string>
     <string name="save_log">Сачувај Дневнике</string>
     <string name="settings_sucompat">Preusmeri su binarni fajl</string>
     <string name="settings_sucompat_summary">Preusmeri /system/bin/su na ksud za aplikacije sa dozvolom Superkorisnika u Profilu aplikacije; efektivno samo za nove procese.</string>

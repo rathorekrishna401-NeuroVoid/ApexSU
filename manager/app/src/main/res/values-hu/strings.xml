@@ -47,6 +47,15 @@ Csatlakozzon a %2$s csatornánkhoz</string>
     <string name="home_click_to_install">Kattintson a telepítéshez</string>
     <string name="home_unsupported">Nem támogatott</string>
     <string name="home_selinux_status">SELinux állapot</string>
+    <string name="home_device_info">Device Information</string>
+    <string name="home_device_model">Device model</string>
+    <string name="home_device_brand">Brand</string>
+    <string name="home_device_manufacturer">Manufacturer</string>
+    <string name="home_device_codename">Device codename</string>
+    <string name="home_android_version">Android version</string>
+    <string name="home_api_level">API level</string>
+    <string name="home_security_patch">Security patch</string>
+    <string name="home_cpu_architecture">CPU architecture</string>
     <string name="selinux_status_enforcing">Kényszerített</string>
     <string name="selinux_status_permissive">Engedélyezett</string>
     <string name="selinux_status_unknown">Ismeretlen</string>

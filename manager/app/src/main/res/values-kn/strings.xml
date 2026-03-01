@@ -41,6 +41,15 @@
     <string name="reboot">ರೀಬೂಟ್</string>
     <string name="home_unsupported_reason">ApexSU ಈಗ GKI ಕರ್ನಲ್‌ಗಳನ್ನು ಮಾತ್ರ ಬೆಂಬಲಿಸುತ್ತದೆ</string>
     <string name="home_selinux_status">SELinux ಸ್ಥಿತಿ</string>
+    <string name="home_device_info">Device Information</string>
+    <string name="home_device_model">Device model</string>
+    <string name="home_device_brand">Brand</string>
+    <string name="home_device_manufacturer">Manufacturer</string>
+    <string name="home_device_codename">Device codename</string>
+    <string name="home_android_version">Android version</string>
+    <string name="home_api_level">API level</string>
+    <string name="home_security_patch">Security patch</string>
+    <string name="home_cpu_architecture">CPU architecture</string>
     <string name="module_version">ವರ್ಷನ್</string>
     <string name="home_unsupported">ಬೆಂಬಲಿತವಾಗಿಲ್ಲ</string>
     <string name="profile_selinux_domain">ಡೊಮೇನ್</string>

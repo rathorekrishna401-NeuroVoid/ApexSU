@@ -2,6 +2,15 @@
 <resources>
     <string name="home_unsupported_reason">কর্নেল এস ইউ কেবল মাত্র জিকআই কর্নেল সাপোর্ট করে</string>
     <string name="home_selinux_status">এসইলিনাক্স স্টেটাস</string>
+    <string name="home_device_info">Device Information</string>
+    <string name="home_device_model">Device model</string>
+    <string name="home_device_brand">Brand</string>
+    <string name="home_device_manufacturer">Manufacturer</string>
+    <string name="home_device_codename">Device codename</string>
+    <string name="home_android_version">Android version</string>
+    <string name="home_api_level">API level</string>
+    <string name="home_security_patch">Security patch</string>
+    <string name="home_cpu_architecture">CPU architecture</string>
     <string name="selinux_status_unknown">আননোন</string>
     <string name="module_failed_to_enable">মোডিউল ইনেবল করা যায়নি: %s</string>
     <string name="home_click_to_install">ইন্সটল করটে চাপুন</string>

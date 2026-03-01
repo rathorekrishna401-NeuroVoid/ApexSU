@@ -12,6 +12,15 @@
     <string name="home_manager_version">Версия менеджера</string>
     <string name="home_fingerprint">Подпись</string>
     <string name="home_selinux_status">Состояние SELinux</string>
+    <string name="home_device_info">Device Information</string>
+    <string name="home_device_model">Device model</string>
+    <string name="home_device_brand">Brand</string>
+    <string name="home_device_manufacturer">Manufacturer</string>
+    <string name="home_device_codename">Device codename</string>
+    <string name="home_android_version">Android version</string>
+    <string name="home_api_level">API level</string>
+    <string name="home_security_patch">Security patch</string>
+    <string name="home_cpu_architecture">CPU architecture</string>
     <string name="selinux_status_disabled">Выключен</string>
     <string name="selinux_status_enforcing">Принудительный</string>
     <string name="selinux_status_permissive">Разрешающий</string>

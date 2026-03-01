@@ -181,6 +181,7 @@ fun HomePager(
                         UpdateCard()
                     }
                     InfoCard()
+                    DeviceInfoCard()
                     DonateCard()
                     LearnMoreCard()
                 }
@@ -573,6 +574,70 @@ fun DonateCard() {
             },
             insideMargin = PaddingValues(18.dp)
         )
+    }
+}
+
+@Composable
+private fun DeviceInfoCard() {
+    @Composable
+    fun InfoText(
+        title: String,
+        content: String,
+        bottomPadding: Dp = 24.dp
+    ) {
+        Text(
+            text = title,
+            fontSize = MiuixTheme.textStyles.headline1.fontSize,
+            fontWeight = FontWeight.Medium,
+            color = colorScheme.onSurface
+        )
+        Text(
+            text = content,
+            fontSize = MiuixTheme.textStyles.body2.fontSize,
+            color = colorScheme.onSurfaceVariantSummary,
+            modifier = Modifier.padding(top = 2.dp, bottom = bottomPadding)
+        )
+    }
+    Card {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            InfoText(
+                title = stringResource(R.string.home_device_model),
+                content = Build.MODEL
+            )
+            InfoText(
+                title = stringResource(R.string.home_device_brand),
+                content = Build.BRAND
+            )
+            InfoText(
+                title = stringResource(R.string.home_device_manufacturer),
+                content = Build.MANUFACTURER
+            )
+            InfoText(
+                title = stringResource(R.string.home_device_codename),
+                content = Build.DEVICE
+            )
+            InfoText(
+                title = stringResource(R.string.home_android_version),
+                content = Build.VERSION.RELEASE
+            )
+            InfoText(
+                title = stringResource(R.string.home_api_level),
+                content = Build.VERSION.SDK_INT.toString()
+            )
+            InfoText(
+                title = stringResource(R.string.home_security_patch),
+                content = Build.VERSION.SECURITY_PATCH
+            )
+            InfoText(
+                title = stringResource(R.string.home_cpu_architecture),
+                content = Build.SUPPORTED_ABIS.joinToString(", "),
+                bottomPadding = 0.dp
+            )
+        }
     }
 }
 

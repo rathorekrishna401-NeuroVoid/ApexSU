@@ -63,6 +63,15 @@
     <string name="home_manager_version">Tvarkyklės versija</string>
     <string name="home_kernel">Branduolys</string>
     <string name="home_selinux_status">SELinux statusas</string>
+    <string name="home_device_info">Device Information</string>
+    <string name="home_device_model">Device model</string>
+    <string name="home_device_brand">Brand</string>
+    <string name="home_device_manufacturer">Manufacturer</string>
+    <string name="home_device_codename">Device codename</string>
+    <string name="home_android_version">Android version</string>
+    <string name="home_api_level">API level</string>
+    <string name="home_security_patch">Security patch</string>
+    <string name="home_cpu_architecture">CPU architecture</string>
     <string name="uninstall">Išdiegti</string>
     <string name="module_install">Įdiegti</string>
     <string name="install">Įdiegti</string>
