@@ -1,4 +1,42 @@
-.idea
-.vscode
+# IDE
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Rust build
+target/
+
+# Gradle / Android build
+build/
+.gradle/
+local.properties
+manager/app/build/
+manager/build/
+
+# Built native libraries (build from source)
+manager/app/src/main/jniLibs/
+
+# Built binaries
+*.apk
+*.aab
+*.ko
+
+# Screenshots (dev artifacts)
+screenshots/
+
+# Phase reports and internal analysis docs
+PHASE*_REPORT.md
+PHASE*_FINAL.md
+DEEP_ANALYSIS.md
+SECURITY_AUDIT.md
+
+# Agent config
 CLAUDE.md
 AGENTS.md

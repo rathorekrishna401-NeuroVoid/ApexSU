@@ -1,0 +1,43 @@
+name: PR Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  policy-check:
+    name: Policy Enforcement
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for new C files
+        run: |
+          NEW_C=$(git diff --name-only --diff-filter=A origin/main...HEAD | grep -E '\.c$' | grep -v '^kernel/' || true)
+          if [ -n "$NEW_C" ]; then
+            echo "::error::New C files outside kernel/ violate Rust-First Law:"
+            echo "$NEW_C"
+            exit 1
+          fi
+          echo "✅ No new C files outside kernel/"
+
+      - name: Check for dead_code allows
+        run: |
+          DEAD=$(git diff origin/main...HEAD | grep -E '^\+.*#\[allow\(dead_code\)\]' || true)
+          if [ -n "$DEAD" ]; then
+            echo "::warning::New #[allow(dead_code)] found — wire code into live paths instead"
+            echo "$DEAD"
+          fi
+
+      - name: Check for unwrap in library code
+        run: |
+          UNWRAP=$(git diff origin/main...HEAD -- '*.rs' | grep -E '^\+.*\.unwrap\(\)' | grep -v '#\[test\]' | grep -v 'mod tests' | grep -v '// OK:' || true)
+          if [ -n "$UNWRAP" ]; then
+            echo "::warning::New unwrap() calls found — prefer ? operator or proper error handling"
+            echo "$UNWRAP"
+          fi
+
+      - name: Summary
+        run: echo "### PR Policy Check ✅" >> $GITHUB_STEP_SUMMARY

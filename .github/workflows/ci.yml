@@ -1,0 +1,142 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  rust-check:
+    name: Rust Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android
+          components: clippy, rustfmt
+
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            userspace/ksud/target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('userspace/ksud/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-
+
+      - name: Install cargo-ndk
+        run: cargo install cargo-ndk
+
+      - name: Setup Android NDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: ndk;29.0.13846066
+
+      - name: Check formatting
+        working-directory: userspace/ksud
+        run: cargo fmt --check
+
+      - name: Clippy
+        working-directory: userspace/ksud
+        run: cargo ndk -t arm64-v8a clippy -- -D warnings
+
+      - name: Tests
+        working-directory: userspace/ksud
+        run: cargo test --all
+
+  build-apk:
+    name: Build APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android
+
+      - name: Install cargo-ndk
+        run: cargo install cargo-ndk
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: |
+            ndk;29.0.13846066
+            build-tools;35.0.0
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('manager/**/*.gradle*', 'manager/gradle/libs.versions.toml') }}
+          restore-keys: ${{ runner.os }}-gradle-
+
+      - name: Build ksud
+        working-directory: userspace/ksud
+        run: cargo ndk -t arm64-v8a build --release
+
+      - name: Build JNI bridge
+        working-directory: manager/app/src/main/rust/kernelsu-jni
+        run: cargo ndk -t arm64-v8a build --release
+
+      - name: Copy native libraries
+        run: |
+          mkdir -p manager/app/src/main/jniLibs/arm64-v8a
+          cp userspace/ksud/target/aarch64-linux-android/release/ksud \
+             manager/app/src/main/jniLibs/arm64-v8a/libksud.so
+          cp manager/app/src/main/rust/kernelsu-jni/target/aarch64-linux-android/release/libkernelsu.so \
+             manager/app/src/main/jniLibs/arm64-v8a/libkernelsu.so
+
+      - name: Build APK
+        working-directory: manager
+        run: ./gradlew assembleRelease --no-daemon
+
+      - name: Report APK size
+        run: |
+          APK=$(find manager/app/build/outputs/apk/release -name '*.apk' | head -1)
+          SIZE=$(du -h "$APK" | cut -f1)
+          echo "### APK Build" >> $GITHUB_STEP_SUMMARY
+          echo "- **Size:** $SIZE" >> $GITHUB_STEP_SUMMARY
+          echo "- **File:** $(basename $APK)" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-release
+          path: manager/app/build/outputs/apk/release/*.apk
+          retention-days: 7
+
+  cloc-report:
+    name: Language Report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install cloc
+        run: sudo apt-get install -y cloc
+
+      - name: Generate report
+        run: |
+          echo "### Language Distribution" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cloc . --include-lang=C,Kotlin,Rust,"C Header","C/C++ Header" \
+               --exclude-dir=build,.gradle,target --quiet >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
