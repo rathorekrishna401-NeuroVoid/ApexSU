@@ -23,9 +23,13 @@ pub fn on_post_data_fs() -> Result<()> {
     }
 
     #[cfg(unix)]
-    let _ = catch_bootlog("logcat", &["logcat", "-b", "all"]);
+    if let Err(e) = catch_bootlog("logcat", &["logcat", "-b", "all"]) {
+        warn!("Failed to start logcat capture: {e}");
+    }
     #[cfg(unix)]
-    let _ = catch_bootlog("dmesg", &["dmesg", "-w", "-r"]);
+    if let Err(e) = catch_bootlog("dmesg", &["dmesg", "-w", "-r"]) {
+        warn!("Failed to start dmesg capture: {e}");
+    }
 
     if utils::has_magisk() {
         warn!("Magisk detected, skip post-fs-data!");
