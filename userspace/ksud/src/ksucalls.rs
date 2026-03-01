@@ -174,7 +174,10 @@ fn get_info() -> GetInfoCmd {
             version: 0,
             flags: 0,
         };
-        let _ = ksuctl(KSU_IOCTL_GET_INFO, &raw mut cmd);
+        // Best-effort: falls back to default (0, 0) if kernel module unavailable
+        if let Err(e) = ksuctl(KSU_IOCTL_GET_INFO, &raw mut cmd) {
+            log::warn!("Failed to get KSU info from kernel: {e}");
+        }
         cmd
     })
 }
@@ -190,7 +193,10 @@ pub fn grant_root() -> std::io::Result<()> {
 
 fn report_event(event: u32) {
     let mut cmd = ReportEventCmd { event };
-    let _ = ksuctl(KSU_IOCTL_REPORT_EVENT, &raw mut cmd);
+    // Best-effort: event reporting is non-critical
+    if let Err(e) = ksuctl(KSU_IOCTL_REPORT_EVENT, &raw mut cmd) {
+        log::warn!("Failed to report event {event} to kernel: {e}");
+    }
 }
 
 pub fn report_post_fs_data() {
@@ -207,7 +213,11 @@ pub fn report_module_mounted() {
 
 pub fn check_kernel_safemode() -> bool {
     let mut cmd = CheckSafemodeCmd { in_safe_mode: 0 };
-    let _ = ksuctl(KSU_IOCTL_CHECK_SAFEMODE, &raw mut cmd);
+    if let Err(e) = ksuctl(KSU_IOCTL_CHECK_SAFEMODE, &raw mut cmd) {
+        // Default to safemode on error — safer than allowing modules to load
+        log::warn!("Failed to check safemode, assuming safe mode: {e}");
+        return true;
+    }
     cmd.in_safe_mode != 0
 }
 
