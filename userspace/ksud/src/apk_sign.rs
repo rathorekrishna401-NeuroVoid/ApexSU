@@ -11,7 +11,7 @@ pub fn get_apk_signature(apk: &str) -> Result<(u32, String)> {
 
     let mut f = std::fs::File::open(apk)?;
 
-    let mut i = 0;
+    let mut i: i64 = 0;
     loop {
         let mut n = [0u8; 2];
         f.seek(SeekFrom::End(-i - 2))?;
@@ -87,9 +87,10 @@ pub fn get_apk_signature(apk: &str) -> Result<(u32, String)> {
             v3_1_signing_exist = true;
         }
 
-        f.seek(SeekFrom::Current(
-            i64::from_le_bytes(size8) - i64::from(offset),
-        ))?;
+        let block_len = i64::from_le_bytes(size8);
+        let skip = block_len - i64::from(offset);
+        ensure!(skip >= 0, "Invalid APK: block length smaller than offset");
+        f.seek(SeekFrom::Current(skip))?;
     }
 
     if v3_signing_exist || v3_1_signing_exist {
