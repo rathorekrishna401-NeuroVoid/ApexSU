@@ -1,3 +1,5 @@
+//! Feature flag management for toggling KernelSU capabilities.
+
 use anyhow::{Context, Result, bail};
 use const_format::concatcp;
 use std::collections::HashMap;

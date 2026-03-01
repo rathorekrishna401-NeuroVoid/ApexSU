@@ -1,3 +1,5 @@
+//! Su command implementation for granting and managing root access.
+
 use crate::{
     defs,
     utils::{self, umask},
@@ -25,6 +27,7 @@ pub fn grant_root(global_mnt: bool) -> Result<()> {
     crate::ksucalls::grant_root()?;
 
     let mut command = Command::new("sh");
+    // SAFETY: pre_exec runs in a forked child before exec; switch_mnt_ns is safe to call here.
     let command = unsafe {
         command.pre_exec(move || {
             if global_mnt {
@@ -60,15 +63,19 @@ fn set_identity(uid: u32, gid: u32, groups: &[u32]) {
 
 fn wrap_tty(fd: c_int) {
     let inner_fn = move || -> Result<()> {
+        // SAFETY: fd is a valid open file descriptor; isatty is safe to call.
         if unsafe { libc::isatty(fd) != 1 } {
             return Ok(());
         }
         let new_fd = get_wrapped_fd(fd).context("get_wrapped_fd")?;
+        // SAFETY: new_fd and fd are valid file descriptors.
         if unsafe { libc::dup2(new_fd, fd) } == -1 {
+            // SAFETY: __errno returns a valid pointer to the thread-local errno value.
             bail!("dup {new_fd} -> {fd} errno: {}", unsafe {
                 *libc::__errno()
             });
         }
+        // SAFETY: new_fd is a valid open file descriptor duplicated above.
         unsafe { libc::close(new_fd) };
         Ok(())
     };
@@ -213,6 +220,8 @@ pub fn root_shell() -> Result<()> {
     let mut uid = getuid().as_raw();
     if free_idx < matches.free.len() {
         let name = &matches.free[free_idx];
+        // SAFETY: CString produces a valid NUL-terminated pointer; getpwnam returns
+        // a valid pointer or null, and .as_ref() handles the null case safely.
         uid = unsafe {
             let pw = CString::new(name.as_str())
                 .ok()
@@ -233,9 +242,11 @@ pub fn root_shell() -> Result<()> {
         // This is actually incorrect, i don't know why.
         // command = command.env_clear();
 
+        // SAFETY: uid is a valid user ID; getpwuid returns a valid pointer or null.
         let pw = unsafe { libc::getpwuid(uid).as_ref() };
 
         if let Some(pw) = pw {
+            // SAFETY: pw is non-null; pw_dir and pw_name are valid C strings per POSIX.
             let home = unsafe { CStr::from_ptr(pw.pw_dir) };
             let pw_name = unsafe { CStr::from_ptr(pw.pw_name) };
 
@@ -261,6 +272,8 @@ pub fn root_shell() -> Result<()> {
     // escape from the current cgroup and become session leader
     // WARNING!!! This cause some root shell hang forever!
     // command = command.process_group(0);
+    // SAFETY: pre_exec runs in a forked child before exec; all operations inside
+    // (umask, switch_cgroups, switch_mnt_ns, set_identity) are safe in this context.
     command = unsafe {
         command.pre_exec(move || {
             umask(0o22);
@@ -293,6 +306,7 @@ fn add_path_to_env(path: &str) -> Result<()> {
     let new_path = PathBuf::from(path.trim_end_matches('/'));
     paths.push(new_path);
     let new_path_env = env::join_paths(paths)?;
+    // SAFETY: called during single-threaded initialization before spawning threads.
     unsafe { env::set_var("PATH", new_path_env) };
     Ok(())
 }

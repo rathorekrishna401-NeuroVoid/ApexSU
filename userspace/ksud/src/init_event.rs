@@ -1,3 +1,5 @@
+//! Init event handling for post-fs-data, services, and boot-completed stages.
+
 use anyhow::{Context, Result};
 use log::{info, warn};
 use std::path::Path;
@@ -170,6 +172,7 @@ fn catch_bootlog(logname: &str, command: &[&str]) -> Result<()> {
     let mut args = vec!["-s", "9", "30s"];
     args.extend_from_slice(command);
     // timeout -s 9 30s logcat > boot.log
+    // SAFETY: pre_exec runs in a fork before exec; switch_cgroups has no unsafe preconditions.
     let result = unsafe {
         std::process::Command::new("timeout")
             .process_group(0)

@@ -1,3 +1,5 @@
+//! Boot image patching and restoration for KernelSU installation.
+
 #![allow(clippy::ref_option, clippy::needless_pass_by_value)]
 #[cfg(unix)]
 use std::os::unix::fs::PermissionsExt;
@@ -399,6 +401,7 @@ fn find_magiskboot(magiskboot_path: Option<PathBuf>, workdir: &Path) -> Result<P
     Ok(magiskboot)
 }
 
+#[allow(unused_variables, unused_mut)]
 fn find_boot_image(
     image: &Option<PathBuf>,
     kmi: &str,

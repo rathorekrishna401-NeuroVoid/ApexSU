@@ -1,3 +1,5 @@
+//! General-purpose utilities for file operations, process management, and system helpers.
+
 use anyhow::{Context, Error, Ok, Result, bail};
 use std::{
     fs::{File, OpenOptions, create_dir_all, remove_file, write},

@@ -1,3 +1,5 @@
+//! Constants, path definitions, and version information for KernelSU.
+
 #[cfg(target_os = "android")]
 mod android {
     use const_format::concatcp;
@@ -42,6 +44,8 @@ mod android {
     pub const BACKUP_FILENAME: &str = "stock_image.sha1";
 }
 
+// Used at build time for version embedding
+#[allow(dead_code)]
 pub const VERSION_CODE: &str = include_str!(concat!(env!("OUT_DIR"), "/VERSION_CODE"));
 pub const VERSION_NAME: &str = include_str!(concat!(env!("OUT_DIR"), "/VERSION_NAME"));
 

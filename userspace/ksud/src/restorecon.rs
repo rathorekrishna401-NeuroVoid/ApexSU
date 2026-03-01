@@ -1,3 +1,5 @@
+//! SELinux context restoration for KernelSU-managed paths.
+
 use crate::defs;
 use anyhow::Result;
 use jwalk::{Parallelism::Serial, WalkDir};

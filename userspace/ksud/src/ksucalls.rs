@@ -1,3 +1,5 @@
+//! Kernel supercall interface providing ioctl wrappers for KernelSU driver communication.
+
 #![allow(clippy::unreadable_literal)]
 use libc::{_IO, _IOR, _IOW, _IOWR};
 use std::fs;
@@ -132,6 +134,8 @@ fn init_driver_fd() -> Option<RawFd> {
     let fd = scan_driver_fd();
     if fd.is_none() {
         let mut fd = -1;
+        // SAFETY: syscall invoked with KSU-specific reboot magic constants
+        // and a valid mutable pointer to receive the driver fd.
         unsafe {
             libc::syscall(
                 libc::SYS_reboot,
@@ -152,6 +156,7 @@ fn ksuctl<T>(request: i32, arg: *mut T) -> std::io::Result<i32> {
     use std::io;
 
     let fd = *DRIVER_FD.get_or_init(|| init_driver_fd().unwrap_or(-1));
+    // SAFETY: fd is a valid driver file descriptor and arg points to a caller-owned T.
     unsafe {
         let ret = libc::ioctl(fd as libc::c_int, request, arg);
         if ret < 0 {

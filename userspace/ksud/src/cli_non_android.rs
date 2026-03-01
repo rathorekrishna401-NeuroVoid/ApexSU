@@ -1,3 +1,5 @@
+//! CLI argument parsing and command dispatch for non-Android platforms.
+
 use anyhow::Result;
 use clap::Parser;
 

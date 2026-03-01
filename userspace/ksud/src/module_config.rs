@@ -1,3 +1,5 @@
+//! Module configuration parsing and module property management.
+
 use anyhow::{Context, Result, bail};
 use log::{debug, warn};
 use std::collections::HashMap;

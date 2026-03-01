@@ -1,3 +1,5 @@
+//! App profile management for per-app root and SELinux policy configuration.
+
 use crate::utils::ensure_dir_exists;
 use crate::{defs, sepolicy};
 use anyhow::{Context, Result};

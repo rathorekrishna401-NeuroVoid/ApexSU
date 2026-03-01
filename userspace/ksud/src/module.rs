@@ -1,3 +1,5 @@
+//! Module installation, lifecycle management, and overlay handling.
+
 #[allow(clippy::wildcard_imports)]
 use crate::utils::*;
 use crate::{
@@ -206,6 +208,7 @@ pub fn exec_script<T: AsRef<Path>>(path: T, wait: bool) -> Result<()> {
     #[cfg(unix)]
     {
         command = command.process_group(0);
+        // SAFETY: pre_exec runs in a forked child before exec; switch_cgroups is safe here.
         command = unsafe {
             command.pre_exec(|| {
                 // ignore the error?

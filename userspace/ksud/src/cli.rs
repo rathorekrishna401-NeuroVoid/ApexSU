@@ -1,3 +1,5 @@
+//! CLI argument parsing and command dispatch for Android targets.
+
 use anyhow::{Context, Ok, Result};
 use clap::Parser;
 use std::path::PathBuf;

@@ -1,3 +1,5 @@
+//! Embedded asset management for bundled binaries and files.
+
 use anyhow::Result;
 use rust_embed::RustEmbed;
 use std::path::Path;

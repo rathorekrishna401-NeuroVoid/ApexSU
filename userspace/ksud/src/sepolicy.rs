@@ -1,3 +1,5 @@
+//! SELinux policy rule parsing and management.
+
 use anyhow::{Result, bail};
 use derive_new::new;
 use nom::{

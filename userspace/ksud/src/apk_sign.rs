@@ -1,3 +1,5 @@
+//! APK signature verification utilities.
+
 use anyhow::{Result, ensure};
 use std::io::{Read, Seek, SeekFrom};
 

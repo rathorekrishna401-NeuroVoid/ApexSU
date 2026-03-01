@@ -1,3 +1,5 @@
+//! Entry point for the ksud daemon, the KernelSU userspace component.
+
 #![deny(clippy::all, clippy::pedantic)]
 #![warn(clippy::nursery)]
 #![allow(

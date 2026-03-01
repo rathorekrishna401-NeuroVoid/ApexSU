@@ -1,3 +1,5 @@
+//! Debug utilities for boot logging and bugreport generation.
+
 use anyhow::{Context, Ok, Result, bail, ensure};
 use std::{
     path::{Path, PathBuf},
