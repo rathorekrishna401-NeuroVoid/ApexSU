@@ -263,7 +263,9 @@ fn ksuctl(op: libc::c_ulong, arg: *mut libc::c_void) -> libc::c_int {
     }
     // SAFETY: `ioctl` is called on the driver FD with kernel-defined commands
     // and properly laid-out `#[repr(C)]` structs passed by pointer.
-    unsafe { libc::ioctl(fd, op, arg) }
+    // The `as _` cast adapts to the platform's ioctl request type
+    // (c_ulong on glibc, c_int on Android bionic).
+    unsafe { libc::ioctl(fd, op as _, arg) }
 }
 
 // ---------------------------------------------------------------------------
