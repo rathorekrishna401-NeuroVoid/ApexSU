@@ -5,6 +5,7 @@
 //! integrity.
 
 use anyhow::{Context, Result, ensure};
+use serde::Serialize;
 use std::io::{Read, Seek};
 use std::path::Path;
 
@@ -33,7 +34,7 @@ pub const MAX_SINGLE_FILE_SIZE: u64 = 100 * 1024 * 1024;
 const REQUIRED_FIELDS: &[&str] = &["id", "name", "version", "versionCode"];
 
 /// Result of a single validation check.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct ValidationIssue {
     /// What check failed.
     pub check: String,
@@ -46,7 +47,7 @@ pub struct ValidationIssue {
 }
 
 /// Severity of a validation issue.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 pub enum IssueSeverity {
     /// Blocks installation.
     Error,
@@ -55,7 +56,7 @@ pub enum IssueSeverity {
 }
 
 /// Result of validating a module ZIP.
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub struct ValidationReport {
     /// All issues found during validation.
     pub issues: Vec<ValidationIssue>,
@@ -134,23 +135,13 @@ pub fn validate_module_zip_from_reader<R: Read + Seek>(reader: R) -> Result<Vali
             .with_context(|| format!("Failed to read ZIP entry {i}"))?;
         let name = entry.name().to_string();
 
-        // Check for path traversal
-        if name.contains("../") || name.contains("..\\") {
+        // Check for path traversal and absolute paths
+        if has_path_traversal(&name) {
             issues.push(ValidationIssue {
                 check: "path_traversal".into(),
                 severity: IssueSeverity::Error,
-                message: format!("Entry contains path traversal: '{name}'"),
-                suggestion: "Remove ../ components from entry paths".into(),
-            });
-        }
-
-        // Check for absolute paths
-        if name.starts_with('/') || name.starts_with('\\') {
-            issues.push(ValidationIssue {
-                check: "absolute_path".into(),
-                severity: IssueSeverity::Error,
-                message: format!("Entry has absolute path: '{name}'"),
-                suggestion: "Use relative paths in ZIP entries".into(),
+                message: format!("Entry contains path traversal or absolute path: '{name}'"),
+                suggestion: "Remove ../ components and use relative paths in ZIP entries".into(),
             });
         }
 

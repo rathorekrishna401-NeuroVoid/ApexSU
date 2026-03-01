@@ -3,7 +3,7 @@
 #[allow(clippy::wildcard_imports)]
 use crate::utils::*;
 use crate::{
-    assets, defs, ksucalls, metamodule,
+    assets, defs, ksucalls, metamodule, module_validator,
     restorecon::{restore_syscon, setsyscon},
     sepolicy,
 };
@@ -13,7 +13,6 @@ use const_format::concatcp;
 use is_executable::is_executable;
 use java_properties::PropertiesIter;
 use log::{debug, info, warn};
-use regex_lite::Regex;
 
 use std::fs::{copy, rename};
 use std::{
@@ -48,14 +47,7 @@ const INSTALL_MODULE_SCRIPT: &str = concatcp!(
 /// - Followed by one or more alphanumeric, dot, underscore, or hyphen characters
 /// - Minimum length: 2 characters
 pub fn validate_module_id(module_id: &str) -> Result<()> {
-    let re = Regex::new(r"^[a-zA-Z][a-zA-Z0-9._-]+$")?;
-    if re.is_match(module_id) {
-        Ok(())
-    } else {
-        Err(anyhow!(
-            "Invalid module ID: '{module_id}'. Must match /^[a-zA-Z][a-zA-Z0-9._-]+$/"
-        ))
-    }
+    module_validator::validate_id(module_id)
 }
 
 /// Get common environment variables for script execution
@@ -410,6 +402,29 @@ pub fn handle_updated_modules() -> Result<()> {
 
 fn install_module_to_system(zip: &str) -> Result<()> {
     ensure_boot_completed()?;
+
+    // Validate the module ZIP before any extraction
+    let report = module_validator::validate_module_zip(zip)?;
+    for issue in &report.issues {
+        if issue.severity == module_validator::IssueSeverity::Warning {
+            warn!("Module validation warning: {}", issue.message);
+        }
+    }
+    if !report.is_valid() {
+        let errors: Vec<&str> = report
+            .issues
+            .iter()
+            .filter(|i| i.severity == module_validator::IssueSeverity::Error)
+            .map(|i| i.message.as_str())
+            .collect();
+        bail!("Module rejected: {}", errors.join("; "));
+    }
+    info!(
+        "Module ZIP passed validation: {} ({} entries, {} bytes)",
+        report.module_id.as_deref().unwrap_or("unknown"),
+        report.entry_count,
+        report.total_size
+    );
 
     // print banner
     println!(include_str!("banner"));

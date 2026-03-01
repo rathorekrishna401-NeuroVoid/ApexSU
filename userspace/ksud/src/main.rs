@@ -23,7 +23,6 @@ mod cli_non_android;
 mod debug;
 mod defs;
 #[cfg(target_os = "android")]
-#[allow(dead_code)]
 mod diagnostics;
 #[cfg(target_os = "android")]
 mod feature;
@@ -37,7 +36,6 @@ mod metamodule;
 mod module;
 #[cfg(target_os = "android")]
 mod module_config;
-#[allow(dead_code)]
 mod module_validator;
 #[cfg(target_os = "android")]
 mod profile;

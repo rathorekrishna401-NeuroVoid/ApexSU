@@ -3,12 +3,13 @@
 //! Provides structured diagnostic reports that verify the health of the
 //! kernel module, ksud daemon, allowlist file, and module directory structure.
 
+use serde::Serialize;
 use std::path::Path;
 
 use crate::defs;
 
 /// Status of a single diagnostic check.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 pub enum CheckStatus {
     /// Check passed successfully.
     Pass,
@@ -29,7 +30,7 @@ impl std::fmt::Display for CheckStatus {
 }
 
 /// A single diagnostic check result.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct DiagnosticCheck {
     /// Name of the check.
     pub name: String,
@@ -42,7 +43,7 @@ pub struct DiagnosticCheck {
 }
 
 /// Complete diagnostic report.
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub struct DiagnosticReport {
     /// All check results.
     pub checks: Vec<DiagnosticCheck>,
@@ -113,6 +114,11 @@ pub fn run_diagnostics() -> DiagnosticReport {
     ];
 
     DiagnosticReport { checks }
+}
+
+/// Serialize a diagnostic report to a JSON string.
+pub fn report_to_json(report: &DiagnosticReport) -> String {
+    serde_json::to_string_pretty(report).unwrap_or_else(|e| format!("{{\"error\": \"{e}\"}}"))
 }
 
 /// Check if the kernel module is loaded and responding.

@@ -8,7 +8,9 @@ use android_logger::Config;
 use log::LevelFilter;
 
 use crate::boot_patch::{BootPatchArgs, BootRestoreArgs};
-use crate::{apk_sign, assets, debug, defs, init_event, ksucalls, module, module_config, utils};
+use crate::{
+    apk_sign, assets, debug, defs, diagnostics, init_event, ksucalls, module, module_config, utils,
+};
 
 /// KernelSU userspace cli
 #[derive(Parser, Debug)]
@@ -86,6 +88,13 @@ enum Commands {
     Kernel {
         #[command(subcommand)]
         command: Kernel,
+    },
+
+    /// Run system diagnostics to check ApexSU health
+    Diagnose {
+        /// Output as JSON instead of human-readable text
+        #[arg(long, default_value_t = false)]
+        json: bool,
     },
 }
 
@@ -634,6 +643,21 @@ pub fn run() -> Result<()> {
                 Ok(())
             }
         },
+        Commands::Diagnose { json } => {
+            let report = diagnostics::run_diagnostics();
+            if json {
+                let json_report = diagnostics::report_to_json(&report);
+                println!("{json_report}");
+            } else {
+                print!("{}", report.to_text());
+            }
+            if report.is_healthy() {
+                Ok(())
+            } else {
+                // Signal failure via exit code but don't print redundant error
+                std::process::exit(1);
+            }
+        }
     };
 
     if let Err(e) = &result {
