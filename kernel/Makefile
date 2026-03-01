@@ -6,15 +6,20 @@ $(info -- MDIR: $(MDIR))
 
 .PHONY: all compdb clean format check-format
 
-all: check_symbol
+all:
 	make -C $(KDIR) M=$(MDIR) modules
+ifneq ($(shell command -v cargo 2>/dev/null),)
+	$(MAKE) check_symbol
 	./check_symbol kernelsu.ko $(KDIR)/vmlinux
+else
+	@echo "WARNING: cargo not found, skipping symbol validation"
+endif
 compdb:
 	python3 $(MDIR)/.vscode/generate_compdb.py -O $(KDIR) $(MDIR)
 clean:
 	make -C $(KDIR) M=$(MDIR) clean
 	rm -f check_symbol
-	cargo clean --manifest-path $(MDIR)/tools/check_symbol_rs/Cargo.toml
+	-cargo clean --manifest-path $(MDIR)/tools/check_symbol_rs/Cargo.toml 2>/dev/null
 check_symbol: tools/check_symbol_rs/src/main.rs tools/check_symbol_rs/Cargo.toml
 	cargo build --release --manifest-path $(MDIR)/tools/check_symbol_rs/Cargo.toml
 	cp $(MDIR)/tools/check_symbol_rs/target/release/check_symbol $(MDIR)/check_symbol
