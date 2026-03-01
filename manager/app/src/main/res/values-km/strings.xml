@@ -16,4 +16,11 @@
     <string name="settings_sucompat_summary">បញ្ជូន /system/bin/su ទៅកាន់ ksud សម្រាប់កម្មវិធីដែលបានទទួលសិទ្ធិ Superuser នៅក្នុងទម្រង់កម្មវិធី; មានប្រសិទ្ធភាពសម្រាប់ដំណើរការថ្មីប៉ុណ្ណោះ។</string>
     <string name="settings_kernel_umount">Kernel umount</string>
     <string name="settings_kernel_umount_summary">ឥរិយាបថ umount កម្រិតខឺណែលគ្រប់គ្រងដោយ ApexSU</string>
+    <string name="about_our_repository">Our Repository</string>
+    <string name="about_star_on_github">Star on GitHub</string>
+    <string name="about_view_source">View source code</string>
+    <string name="about_report_issue">Report an issue</string>
+    <string name="about_changelog">Changelog</string>
+    <string name="about_view_releases">View all releases</string>
+    <string name="copied_to_clipboard">%s copied</string>
 </resources>

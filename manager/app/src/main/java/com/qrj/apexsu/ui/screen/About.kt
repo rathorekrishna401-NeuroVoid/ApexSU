@@ -21,6 +21,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.BugReport
+import androidx.compose.material.icons.rounded.Code
+import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material.icons.rounded.NewReleases
+import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,7 +35,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.FixedScale
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalUriHandler
@@ -177,6 +183,92 @@ fun AboutScreen() {
                         )
                     }
                 }
+            }
+            item {
+                Card(
+                    modifier = Modifier.padding(bottom = 12.dp)
+                ) {
+                    SuperArrow(
+                        title = stringResource(R.string.about_our_repository),
+                        startAction = {
+                            Icon(
+                                imageVector = Icons.Rounded.Favorite,
+                                contentDescription = null,
+                                tint = colorScheme.primary,
+                                modifier = Modifier
+                                    .padding(end = 12.dp)
+                                    .size(24.dp)
+                            )
+                        },
+                        onClick = {
+                            uriHandler.openUri("https://github.com/qrjhamron/ApexSU")
+                        }
+                    )
+                    SuperArrow(
+                        title = stringResource(R.string.about_star_on_github),
+                        startAction = {
+                            Icon(
+                                imageVector = Icons.Rounded.StarOutline,
+                                contentDescription = null,
+                                tint = colorScheme.onSurfaceVariantSummary,
+                                modifier = Modifier
+                                    .padding(end = 12.dp)
+                                    .size(24.dp)
+                            )
+                        },
+                        onClick = {
+                            uriHandler.openUri("https://github.com/qrjhamron/ApexSU")
+                        }
+                    )
+                    SuperArrow(
+                        title = stringResource(R.string.about_view_source),
+                        startAction = {
+                            Icon(
+                                imageVector = Icons.Rounded.Code,
+                                contentDescription = null,
+                                tint = colorScheme.onSurfaceVariantSummary,
+                                modifier = Modifier
+                                    .padding(end = 12.dp)
+                                    .size(24.dp)
+                            )
+                        },
+                        onClick = {
+                            uriHandler.openUri("https://github.com/qrjhamron/ApexSU")
+                        }
+                    )
+                    SuperArrow(
+                        title = stringResource(R.string.about_report_issue),
+                        startAction = {
+                            Icon(
+                                imageVector = Icons.Rounded.BugReport,
+                                contentDescription = null,
+                                tint = colorScheme.onSurfaceVariantSummary,
+                                modifier = Modifier
+                                    .padding(end = 12.dp)
+                                    .size(24.dp)
+                            )
+                        },
+                        onClick = {
+                            uriHandler.openUri("https://github.com/qrjhamron/ApexSU/issues")
+                        }
+                    )
+                    SuperArrow(
+                        title = stringResource(R.string.about_changelog),
+                        startAction = {
+                            Icon(
+                                imageVector = Icons.Rounded.NewReleases,
+                                contentDescription = null,
+                                tint = colorScheme.onSurfaceVariantSummary,
+                                modifier = Modifier
+                                    .padding(end = 12.dp)
+                                    .size(24.dp)
+                            )
+                        },
+                        onClick = {
+                            uriHandler.openUri("https://github.com/qrjhamron/ApexSU/releases")
+                        }
+                    )
+                }
                 Spacer(
                     Modifier.height(
                         WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding() +
@@ -212,7 +304,7 @@ fun extractLinks(html: String): List<LinkInfo> {
             Log.d("ggc", "extractLinks: $fullText -> $url")
             LinkInfo(fullText, url)
         } catch (e: Exception) {
-            Log.e("ggc", "匹配失败: ${e.message}")
+            Log.e("ggc", "extractLinks failed: ${e.message}")
             null
         }
     }.toList()

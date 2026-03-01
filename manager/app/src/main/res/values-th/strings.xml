@@ -187,4 +187,11 @@
     <string name="tab_info">ข้อมูล</string>
     <string name="tab_releases">รายการที่เผยแพร่</string>
     <string name="safe_mode_module_disabled">ไม่สามารถติดตั้งโมดูลได้ในโหมดปลอดภัย</string>
+    <string name="about_our_repository">Our Repository</string>
+    <string name="about_star_on_github">Star on GitHub</string>
+    <string name="about_view_source">View source code</string>
+    <string name="about_report_issue">Report an issue</string>
+    <string name="about_changelog">Changelog</string>
+    <string name="about_view_releases">View all releases</string>
+    <string name="copied_to_clipboard">%s copied</string>
 </resources>

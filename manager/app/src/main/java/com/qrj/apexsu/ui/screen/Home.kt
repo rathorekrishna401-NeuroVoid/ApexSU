@@ -1,14 +1,19 @@
 package com.qrj.apexsu.ui.screen
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.os.Build
 import android.system.Os
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -570,33 +575,44 @@ fun DonateCard() {
                 )
             },
             onClick = {
-                uriHandler.openUri("https://patreon.com/weishu")
+                uriHandler.openUri("https://github.com/qrjhamron/ApexSU")
             },
             insideMargin = PaddingValues(18.dp)
         )
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun DeviceInfoCard() {
+    val context = LocalContext.current
     @Composable
     fun InfoText(
         title: String,
         content: String,
         bottomPadding: Dp = 24.dp
     ) {
-        Text(
-            text = title,
-            fontSize = MiuixTheme.textStyles.headline1.fontSize,
-            fontWeight = FontWeight.Medium,
-            color = colorScheme.onSurface
-        )
-        Text(
-            text = content,
-            fontSize = MiuixTheme.textStyles.body2.fontSize,
-            color = colorScheme.onSurfaceVariantSummary,
-            modifier = Modifier.padding(top = 2.dp, bottom = bottomPadding)
-        )
+        Column(
+            modifier = Modifier.combinedClickable(
+                onClick = {},
+                onLongClick = {
+                    copyToClipboard(context, title, content)
+                }
+            )
+        ) {
+            Text(
+                text = title,
+                fontSize = MiuixTheme.textStyles.headline1.fontSize,
+                fontWeight = FontWeight.Medium,
+                color = colorScheme.onSurface
+            )
+            Text(
+                text = content,
+                fontSize = MiuixTheme.textStyles.body2.fontSize,
+                color = colorScheme.onSurfaceVariantSummary,
+                modifier = Modifier.padding(top = 2.dp, bottom = bottomPadding)
+            )
+        }
     }
     Card {
         Column(
@@ -641,31 +657,41 @@ private fun DeviceInfoCard() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun InfoCard() {
+    val context = LocalContext.current
     @Composable
     fun InfoText(
         title: String,
         content: String,
         bottomPadding: Dp = 24.dp
     ) {
-        Text(
-            text = title,
-            fontSize = MiuixTheme.textStyles.headline1.fontSize,
-            fontWeight = FontWeight.Medium,
-            color = colorScheme.onSurface
-        )
-        Text(
-            text = content,
-            fontSize = MiuixTheme.textStyles.body2.fontSize,
-            color = colorScheme.onSurfaceVariantSummary,
-            modifier = Modifier.padding(top = 2.dp, bottom = bottomPadding)
-        )
+        Column(
+            modifier = Modifier.combinedClickable(
+                onClick = {},
+                onLongClick = {
+                    copyToClipboard(context, title, content)
+                }
+            )
+        ) {
+            Text(
+                text = title,
+                fontSize = MiuixTheme.textStyles.headline1.fontSize,
+                fontWeight = FontWeight.Medium,
+                color = colorScheme.onSurface
+            )
+            Text(
+                text = content,
+                fontSize = MiuixTheme.textStyles.body2.fontSize,
+                color = colorScheme.onSurfaceVariantSummary,
+                modifier = Modifier.padding(top = 2.dp, bottom = bottomPadding)
+            )
+        }
     }
     Card {
-        val context = LocalContext.current
         val uname = Os.uname()
-        val managerVersion = getManagerVersion(context)
+        val managerVersion = getManagerVersion(LocalContext.current)
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -690,6 +716,16 @@ private fun InfoCard() {
             )
         }
     }
+}
+
+private fun copyToClipboard(context: Context, label: String, text: String) {
+    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    clipboard.setPrimaryClip(ClipData.newPlainText(label, text))
+    Toast.makeText(
+        context,
+        context.getString(R.string.copied_to_clipboard, label),
+        Toast.LENGTH_SHORT
+    ).show()
 }
 
 fun getManagerVersion(context: Context): Pair<String, Long> {

@@ -142,4 +142,11 @@
     <string name="module_repos_source_code">Source code</string>
     <string name="metamodule_uninstall_confirm">Sigurado ka ba gusto mong i-uninstall ang module na %s? Aapektuhan ng aksyon na ito ang lahat ng mga module, at hindi na gagana ang mga feature na ibinigay ng metamodule (tulad ng pag-mount).</string>
     <string name="safe_mode_module_disabled">Naka-disable sa safe mode ang pag-install ng mga module</string>
+    <string name="about_our_repository">Our Repository</string>
+    <string name="about_star_on_github">Star on GitHub</string>
+    <string name="about_view_source">View source code</string>
+    <string name="about_report_issue">Report an issue</string>
+    <string name="about_changelog">Changelog</string>
+    <string name="about_view_releases">View all releases</string>
+    <string name="copied_to_clipboard">%s copied</string>
 </resources>

@@ -214,4 +214,11 @@
     <string name="color_amber">Hổ phách</string>
     <string name="color_blue_grey">Xám xanh</string>
     <string name="color_sakura">Hoa anh đào</string>
+    <string name="about_our_repository">Our Repository</string>
+    <string name="about_star_on_github">Star on GitHub</string>
+    <string name="about_view_source">View source code</string>
+    <string name="about_report_issue">Report an issue</string>
+    <string name="about_changelog">Changelog</string>
+    <string name="about_view_releases">View all releases</string>
+    <string name="copied_to_clipboard">%s copied</string>
 </resources>

@@ -148,4 +148,11 @@
     <string name="settings_sucompat_summary">Uygulama Profilinde Süper Kullanıcı izni verilen uygulamaların /system/bin/su yürütülerek süper kullanıcı kabuğu almasına izin verir; yalnızca yeni işlemler için etkilidir.</string>
     <string name="settings_kernel_umount">Çekirdek bağlantısını kes</string>
     <string name="settings_kernel_umount_summary">ApexSU tarafından kontrol edilen çekirdek seviyesinde bağlantı kesme davranışı</string>
+    <string name="about_our_repository">Our Repository</string>
+    <string name="about_star_on_github">Star on GitHub</string>
+    <string name="about_view_source">View source code</string>
+    <string name="about_report_issue">Report an issue</string>
+    <string name="about_changelog">Changelog</string>
+    <string name="about_view_releases">View all releases</string>
+    <string name="copied_to_clipboard">%s copied</string>
 </resources>

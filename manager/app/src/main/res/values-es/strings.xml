@@ -133,4 +133,11 @@
     <string name="settings_sucompat_summary">Permite que las aplicaciones con permiso de Superusuario en el perfil de la aplicación obtengan un shell de superusuario ejecutando /system/bin/su; efectivo solo para nuevos procesos.</string>
     <string name="settings_kernel_umount">Desmontaje del kernel</string>
     <string name="settings_kernel_umount_summary">Comportamiento de desmontaje a nivel de kernel controlado por ApexSU</string>
+    <string name="about_our_repository">Our Repository</string>
+    <string name="about_star_on_github">Star on GitHub</string>
+    <string name="about_view_source">View source code</string>
+    <string name="about_report_issue">Report an issue</string>
+    <string name="about_changelog">Changelog</string>
+    <string name="about_view_releases">View all releases</string>
+    <string name="copied_to_clipboard">%s copied</string>
 </resources>

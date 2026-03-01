@@ -89,4 +89,11 @@
     <string name="settings_sucompat_summary">הפנה מחדש את /system/bin/su ל-ksud עבור אפליקציות שקיבלו הרשאת Superuser בפרופיל האפליקציה; יעיל לתהליכים חדשים בלבד.</string>
     <string name="settings_kernel_umount">ביטול טעינת קרנל</string>
     <string name="settings_kernel_umount_summary">התנהגות ביטול טעינה ברמת הקרנל הנשלטת על ידי ApexSU</string>
+    <string name="about_our_repository">Our Repository</string>
+    <string name="about_star_on_github">Star on GitHub</string>
+    <string name="about_view_source">View source code</string>
+    <string name="about_report_issue">Report an issue</string>
+    <string name="about_changelog">Changelog</string>
+    <string name="about_view_releases">View all releases</string>
+    <string name="copied_to_clipboard">%s copied</string>
 </resources>

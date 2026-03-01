@@ -89,4 +89,11 @@ Junte-se ao nosso canal %2$s</string>
     <string name="settings_sucompat_summary">Permite que apps com permissão de Superutilizador no Perfil da App obtenham um shell de superutilizador executando /system/bin/su; eficaz apenas para novos processos.</string>
     <string name="settings_kernel_umount">Desmontar kernel</string>
     <string name="settings_kernel_umount_summary">Comportamento de desmontagem ao nível do kernel controlado pelo ApexSU</string>
+    <string name="about_our_repository">Our Repository</string>
+    <string name="about_star_on_github">Star on GitHub</string>
+    <string name="about_view_source">View source code</string>
+    <string name="about_report_issue">Report an issue</string>
+    <string name="about_changelog">Changelog</string>
+    <string name="about_view_releases">View all releases</string>
+    <string name="copied_to_clipboard">%s copied</string>
 </resources>

@@ -90,4 +90,11 @@
     <string name="settings_sucompat_summary">ऐप प्रोफ़ाइल में सुपरयूज़र अनुमति दिए गए ऐप्स को /system/bin/su को निष्पादित करके सुपरयूज़र शेल प्राप्त करने की अनुमति देता है; केवल नई प्रक्रियाओं के लिए प्रभावी।</string>
     <string name="settings_kernel_umount">कर्नेल अनमाउंट</string>
     <string name="settings_kernel_umount_summary">ApexSU द्वारा नियंत्रित कर्नेल-स्तरीय अनमाउंट व्यवहार</string>
+    <string name="about_our_repository">Our Repository</string>
+    <string name="about_star_on_github">Star on GitHub</string>
+    <string name="about_view_source">View source code</string>
+    <string name="about_report_issue">Report an issue</string>
+    <string name="about_changelog">Changelog</string>
+    <string name="about_view_releases">View all releases</string>
+    <string name="copied_to_clipboard">%s copied</string>
 </resources>

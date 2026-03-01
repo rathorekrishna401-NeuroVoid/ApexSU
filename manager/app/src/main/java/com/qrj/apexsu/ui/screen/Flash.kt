@@ -176,7 +176,7 @@ fun FlashScreen(
                         val date = format.format(Date())
                         val file = File(
                             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                            "KernelSU_install_log_${date}.log"
+                            "ApexSU_install_log_${date}.log"
                         )
                         file.writeText(logContent.toString())
                         Toast.makeText(context, "Log saved to ${file.absolutePath}", Toast.LENGTH_SHORT).show()
