@@ -66,10 +66,10 @@ internal suspend fun prepareWebView(
         withContext(Dispatchers.Main) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                 @Suppress("DEPRECATION")
-                activity.setTaskDescription(ActivityManager.TaskDescription("KernelSU - ${moduleInfo.name}"))
+                activity.setTaskDescription(ActivityManager.TaskDescription("ApexSU - ${moduleInfo.name}"))
             } else {
                 val taskDescription = ActivityManager.TaskDescription.Builder()
-                    .setLabel("KernelSU - ${moduleInfo.name}")
+                    .setLabel("ApexSU - ${moduleInfo.name}")
                     .build()
                 activity.setTaskDescription(taskDescription)
             }
